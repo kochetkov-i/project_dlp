@@ -1,0 +1,5 @@
+DEBUG = False
+TESTING = False
+DATABASE_URI = ''
+SECRET_KEY = ''
+FLASK_APP='webapp'

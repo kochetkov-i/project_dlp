@@ -1,9 +1,15 @@
 from flask import Flask, render_template
+from flask_migrate import Migrate
+import psycopg2
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
+    #здесь планировался дефолтный конфиг но что-то пошло не так
     app.config.from_pyfile('config.py')
+    db = psycopg2.connect(**app.config['DATABASE_CRED'])
+    migrate = Migrate(app, db)
+
 
     @app.route('/')
     def index():

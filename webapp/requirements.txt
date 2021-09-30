@@ -1,0 +1,10 @@
+# Flask Framework
+Flask
+
+# Flask Packages
+Flask-Login
+Flask-Migrate
+Flask-Sqlalchemy
+
+# Postgre Packages
+psycopg2-binary
