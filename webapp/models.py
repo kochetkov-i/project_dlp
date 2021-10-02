@@ -1,6 +1,8 @@
-from app import db
+from webapp import db, login_manager
+from flask_login import UserMixin
 
-class Collector_users(db.Model):
+
+class Collector_users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
     surname = db.Column(db.String(64), nullable=False)
@@ -14,7 +16,7 @@ class Collector_users(db.Model):
 
 class Collections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    collector_user_id = db.Column(db.Integer, db.ForeignKey('Collector_users.id'),nullable=False)
+    collector_user_id = db.Column(db.Integer, db.ForeignKey(Collector_users.id),nullable=False)
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text, nullable=False)
     finish_count = db.Column(db.Integer, nullable=False)
@@ -35,3 +37,8 @@ class Images(db.Model):
 
     def __repr__(self):
         return f'<Image Id:{self.id} Collection Id:{self.collections_id}>'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Collector_users.query.get(int(user_id))
