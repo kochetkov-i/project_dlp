@@ -1,22 +1,30 @@
 from webapp import db, login_manager
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Collector_users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
     surname = db.Column(db.String(64), nullable=False)
-    email = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(64), nullable=False, index=True, unique=True)
     Phone = db.Column(db.String(32))
     password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean)
+
+    def set_password(self, password_hash):
+        self.password_hash = generate_password_hash(password_hash)
+
+    def check_password(self, password_hash):
+        return check_password_hash(self.password_hash, password_hash)
 
     def __repr__(self):
-        return f'<User Id:{self.id} Name:{self.name} Surname:{self.surname}>'
+        return f'<User Id:{self.id} Name:{self.name} Surname:{self.surname} Email:{self.email}>'
 
 
 class Collections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    collector_user_id = db.Column(db.Integer, db.ForeignKey(Collector_users.id),nullable=False)
+    collector_user_id = db.Column(db.Integer, db.ForeignKey(Collector_users.id), nullable=False)
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text, nullable=False)
     finish_count = db.Column(db.Integer, nullable=False)
@@ -31,7 +39,7 @@ class Collections(db.Model):
 
 class Images(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    collections_id = db.Column(db.Integer, db.ForeignKey('collections.id'),nullable=False)
+    collections_id = db.Column(db.Integer, db.ForeignKey('collections.id'), nullable=False)
     link = db.Column(db.String(256), nullable=False)
     upload_date = db.Column(db.DateTime, nullable=False)
 
