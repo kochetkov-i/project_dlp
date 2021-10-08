@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>body of withdrawal money page</h1>
+<div class="col-4">
+    <div class="box">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.name.label }}
+                {{ form.name() }}
+            </p>
+            <p>
+                {{ form.description.label }}
+                {{ form.description() }}
+            </p>
+            <p>
+                {{ form.attach.label }}
+                {{ form.attach() }}
+            </p>
+            <p>
+                {{ form.edit() }}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+    </div>
+</div>
 {% endblock %}

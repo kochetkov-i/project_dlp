@@ -1,41 +1,37 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="column is-4 is-offset-4">
-    <h3 class="title">Sign Up</h3>
+<div class="col-4">
     <div class="box">
-        <form method="POST" action="/signup">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="surmame" placeholder="Surmame" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="Phone" placeholder="Phone" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
-                </div>
-            </div>
-
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.email.label }}
+                {{ form.email() }}
+            </p>
+            <p>
+                {{ form.name.label }}
+                {{ form.name() }}
+            </p>
+            <p>
+                {{ form.surname.label }}
+                {{ form.surname() }}
+            </p>
+            <p>
+                {{ form.phone.label }}
+                {{ form.phone() }}
+            </p>
+            <p>
+                {{ form.password.label }}
+                {{ form.password() }}
+            </p>
+            <p>
+                {{ form.confirm.label }}
+                {{ form.confirm() }}
+            </p>
+            <p>
+                {{ form.sign_up() }}
+            </p>
         </form>
     </div>
 </div>

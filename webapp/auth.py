@@ -1,40 +1,56 @@
 from flask import Blueprint
 from . import db
-from flask import render_template, redirect, url_for, request
-from webapp.forms import LoginForm
+from flask import render_template, redirect, url_for, flash
+from webapp.forms import LoginForm, SignUpForm
 from webapp.models import Collector_users
-from werkzeug.security import generate_password_hash
+from flask_login import LOGIN_MESSAGE, REFRESH_MESSAGE, login_user, logout_user, current_user
 
 
+LOGOUT_MESSAGE = 'До встречи'
 auth = Blueprint('auth', __name__)
 
 
 @auth.route('/login')
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     title = "Авторизация"
     login_form = LoginForm()
-    return render_template('login.html', page_title=title, form=login_form)
+    return render_template(
+        'login.html',
+        page_title=title,
+        form=login_form,
+        current_user=current_user)
+
+
+@auth.route('/prosess-login', methods=['POST', 'GET'])
+def procces_login():
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = Collector_users.query.filter_by(
+            Collector_users.name == form.name.data)
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            flash(LOGIN_MESSAGE)
+            return redirect(url_for('index'))
+    flash(REFRESH_MESSAGE)
+    return redirect(url_for('login'))
 
 
 @auth.route('/signup', methods=['POST', 'GET'])
 def signup():
-    email = request.form.get('email')
-    name = request.form.get('name')
-    surname = request.form.get('surname')
-    phone = request.form.get('phone')
-    password = request.form.get('password')
-
-    user = Collector_users.query.filter_by(email=email)
+    signup_form = SignUpForm()
+    title = "Регистрация"
+    user = Collector_users.query.filter_by(name=signup_form.name)
     if user:
-        return render_template('signup.html')
+        return render_template(
+            'signup.html',
+            page_title=title,
+            form=signup_form,
+            current_user=current_user)
 
-    new_user = Collector_users(
-        email=email,
-        name=name,
-        surname=surname,
-        Phone=phone,
-        password=generate_password_hash(password, method='sha256'))
-    db.session.add(new_user)
+    db.session.add(user)
     db.session.commit()
 
     return redirect(url_for('login'))
@@ -42,4 +58,6 @@ def signup():
 
 @auth.route('/logout')
 def logout():
-    return 'Logout'
+    logout_user()
+    flash(LOGOUT_MESSAGE)
+    return redirect(url_for('route.index'))
