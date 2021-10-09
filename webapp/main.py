@@ -3,10 +3,10 @@ from flask_login import current_user, login_required
 from webapp.forms import WithdrawalMoneyForm
 
 
-route = Blueprint('route', __name__)
+main = Blueprint('main', __name__)
 
 
-@route.route('/')
+@main.route('/')
 def index():
     title = "Главная"
     return render_template(
@@ -15,16 +15,16 @@ def index():
         current_user=current_user)
 
 
-@route.route('/profile')
+@main.route('/about')
 def sign_up():
-    title = "Приветствие"
+    title = "О нас"
     return render_template(
-        'profile.html',
+        'about.html',
         page_title=title,
         current_user=current_user)
 
 
-@route.route('/edit')
+@main.route('/edit')
 def edit_moneycollector():
     title = "Редактирование"
     return render_template(
@@ -33,7 +33,7 @@ def edit_moneycollector():
         current_user=current_user)
 
 
-@route.route('/withdrawal_money')
+@main.route('/withdrawal_money')
 def withdrawal_money():
     withdrawa_form = WithdrawalMoneyForm()
     title = "Сбор"
@@ -44,7 +44,7 @@ def withdrawal_money():
         current_user=current_user)
 
 
-@route.route('/admin')
+@main.route('/admin')
 @login_required
 def admin_index():
     return 'Привет админ'

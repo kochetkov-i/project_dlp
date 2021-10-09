@@ -32,7 +32,7 @@ def procces_login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash(LOGIN_MESSAGE)
-            return redirect(url_for('route.index'))
+            return redirect(url_for('main.index'))
     flash(REFRESH_MESSAGE)
     return redirect(url_for('login'))
 
@@ -59,4 +59,4 @@ def signup():
 def logout():
     logout_user()
     flash(LOGOUT_MESSAGE)
-    return redirect(url_for('route.index'))
+    return redirect(url_for('main.index'))
