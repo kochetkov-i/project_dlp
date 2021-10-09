@@ -5,7 +5,7 @@ from wtforms.fields.html5 import EmailField, TelField
 
 
 class LoginForm(FlaskForm):
-    name = StringField(
+    username = StringField(
         'Имя пользователя',
         validators=[DataRequired(), Length(min=1, max=32)],
         render_kw={"class": "form-control"})

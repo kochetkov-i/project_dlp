@@ -2,29 +2,26 @@ from getpass import getpass
 import sys
 
 from webapp import create_app
-from webapp.models import Collector_users, db
+from webapp.models import Users, db
 
 app = create_app()
 
 with app.app_context():
     username = input('Введите имя пользователя: ')
 
-    if Collector_users.query.filter(Collector_users.name == username).count():
+    if Users.query.filter(Users.username == username).count():
         print('Такой пользователь уже есть')
         sys.exit(0)
-    email = input('Введите e-mail: ')
 
     password = getpass('Введите пароль: ')
     password2 = getpass('Повторите пароль: ')
     if not password == password2:
         sys.exit(0)
 
-    new_user = Collector_users(
-        name=username,
-        surname=username,
-        email=email,
-        is_admin='True')
-    print(new_user)
+    new_user = Users(
+        username=username,
+        userrole="admin")
+
     new_user.set_password(password)
 
     db.session.add(new_user)

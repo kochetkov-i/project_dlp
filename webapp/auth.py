@@ -2,7 +2,7 @@ from flask import Blueprint
 from . import db
 from flask import render_template, redirect, url_for, flash
 from webapp.forms import LoginForm, SignUpForm
-from webapp.models import Collector_users
+from webapp.models import Users
 from flask_login import LOGIN_MESSAGE, REFRESH_MESSAGE, login_user, logout_user, current_user
 
 
@@ -28,12 +28,11 @@ def procces_login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = Collector_users.query.filter_by(
-            Collector_users.name == form.name.data)
+        user = Users.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash(LOGIN_MESSAGE)
-            return redirect(url_for('index'))
+            return redirect(url_for('route.index'))
     flash(REFRESH_MESSAGE)
     return redirect(url_for('login'))
 
@@ -42,7 +41,7 @@ def procces_login():
 def signup():
     signup_form = SignUpForm()
     title = "Регистрация"
-    user = Collector_users.query.filter_by(name=signup_form.name)
+    user = Users.query.filter_by(username=signup_form.name)
     if user:
         return render_template(
             'signup.html',
