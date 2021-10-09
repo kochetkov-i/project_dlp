@@ -3,7 +3,8 @@ from . import db
 from flask import render_template, redirect, url_for, flash
 from webapp.forms import LoginForm, SignUpForm
 from webapp.models import Users
-from flask_login import LOGIN_MESSAGE, REFRESH_MESSAGE, login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user
+from flask_login import LOGIN_MESSAGE, REFRESH_MESSAGE
 
 
 LOGOUT_MESSAGE = 'До встречи'

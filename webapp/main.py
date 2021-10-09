@@ -15,11 +15,11 @@ def index():
         current_user=current_user)
 
 
-@main.route('/about')
-def sign_up():
-    title = "О нас"
+@main.route('/contact_us')
+def contact_us():
+    title = "Форма связи"
     return render_template(
-        'about.html',
+        'contactus.html',
         page_title=title,
         current_user=current_user)
 

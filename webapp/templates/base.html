@@ -14,8 +14,8 @@
           <div class="navbar-menu">
             <ul>
               <li><a href="/" class="nav-link">Home</a></li>
-              <li><a href="{{ url_for('route.withdrawal_money') }}" class="nav-link">Withdrawal</a></li>
-              <li><a href="#" class="nav-link">Contact Us</a></li>
+              <li><a href="{{ url_for('main.withdrawal_money') }}" class="nav-link">Withdrawal</a></li>
+              <li><a href="{{ url_for('main.contact_us') }}" class="nav-link">Contact Us</a></li>
             </ul>
             <div class="text-end">
               {% if current_user.is_authenticated %}
