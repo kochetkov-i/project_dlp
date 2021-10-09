@@ -5,3 +5,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'zgsbd345tnyutBUYFUTc576239457rke6rsy324sfgtryt'
     FLASK_APP = 'webapp'
+    FLASK_ADMIN_SWATCH = 'cerulean'

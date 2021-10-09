@@ -12,13 +12,19 @@ with app.app_context():
     if Collector_users.query.filter(Collector_users.name == username).count():
         print('Такой пользователь уже есть')
         sys.exit(0)
+    email = input('Введите e-mail: ')
 
     password = getpass('Введите пароль: ')
     password2 = getpass('Повторите пароль: ')
     if not password == password2:
         sys.exit(0)
 
-    new_user = Collector_users(name=username, is_admin=True)
+    new_user = Collector_users(
+        name=username,
+        surname=username,
+        email=email,
+        is_admin='True')
+    print(new_user)
     new_user.set_password(password)
 
     db.session.add(new_user)
