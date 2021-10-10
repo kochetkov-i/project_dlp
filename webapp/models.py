@@ -24,7 +24,7 @@ class Users(UserMixin, db.Model):
 
     @property
     def is_admin(self):
-        return self.is_admin
+        return self.role == 'admin'
 
     def __repr__(self):
         return '<User Id:{} Name:{} Surname:{} Email:{}>'.format(

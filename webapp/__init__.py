@@ -3,11 +3,14 @@ from webapp.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import LoginManager
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
+admin = Admin(name=Config.FLASK_APP)
 
 
 def create_app():
@@ -26,5 +29,9 @@ def create_app():
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    admin.init_app(app)
+    from webapp.models import Users
+    admin.add_view(ModelView(Users, db.session))
 
     return app
