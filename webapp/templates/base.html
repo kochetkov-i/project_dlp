@@ -11,21 +11,7 @@
 <body>
     <div class="container">
         <header>
-          <div class="navbar-menu">
-            <ul>
-              <li><a href="/" class="nav-link">Home</a></li>
-              <li><a href="{{ url_for('main.withdrawal_money') }}" class="nav-link">Withdrawal</a></li>
-              <li><a href="{{ url_for('main.contact_us') }}" class="nav-link">Contact Us</a></li>
-            </ul>
-            <div class="text-end">
-              {% if current_user.is_authenticated %}
-              <p>{{ current_user.username }}</p>
-              {% endif %}
-              <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary" role="button" >Login</a>
-              <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary" role="button" >Logout</a>
-              <a href="{{ url_for('auth.signup') }}" class="btn btn-outline-primary" role="button" >Sign-up</a>
-            </div>
-          </div>
+          {% include 'menu.html' %}
         </header>
           <h1>{{ page_title }}</h1>
           {% with messages = get_flashed_messages() %}
