@@ -4,10 +4,12 @@ from flask import render_template, redirect, url_for, flash
 from webapp.forms import LoginForm, SignUpForm
 from webapp.models import Users
 from flask_login import login_user, logout_user, current_user
-from flask_login import LOGIN_MESSAGE, REFRESH_MESSAGE
+from webapp.auth_messages_const import LOGIN_MESSAGE, LOGOUT_MESSAGE
+from webapp.auth_messages_const import USER_ALREADY_EXIST_MESSAGE
+from webapp.auth_messages_const import INCORRECT_FILL_FORM_MESSAGE
+from webapp.auth_messages_const import FAIL_LOGIN_MESSAGE
 
 
-LOGOUT_MESSAGE = 'До встречи'
 auth = Blueprint('auth', __name__)
 
 
@@ -34,7 +36,7 @@ def procces_login():
             login_user(user)
             flash(LOGIN_MESSAGE)
             return redirect(url_for('main.index'))
-    flash(REFRESH_MESSAGE)
+    flash(FAIL_LOGIN_MESSAGE)
     return redirect(url_for('auth.login'))
 
 
@@ -53,7 +55,7 @@ def procces_signup():
     signup_form = SignUpForm()
     user = Users.query.filter_by(username=signup_form.name.data).first()
     if user:
-        flash('Такой пользователь уже есть')
+        flash(USER_ALREADY_EXIST_MESSAGE)
         return redirect(url_for('auth.signup'))
     if signup_form.validate_on_submit():
         new_user = Users(
@@ -69,7 +71,7 @@ def procces_signup():
 
         return redirect(url_for('auth.login'))
 
-    flash('Форма заполнена некоректно')
+    flash(INCORRECT_FILL_FORM_MESSAGE)
     return redirect(url_for('auth.signup'))
 
 
