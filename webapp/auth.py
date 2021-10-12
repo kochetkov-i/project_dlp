@@ -31,7 +31,7 @@ def procces_login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = Users.query.filter_by(username=form.username.data).first()
+        user = Users.query.filter_by(useremail=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash(LOGIN_MESSAGE)
@@ -53,7 +53,7 @@ def signup():
 @auth.route('/procces_signup', methods=['POST'])
 def procces_signup():
     signup_form = SignUpForm()
-    user = Users.query.filter_by(username=signup_form.name.data).first()
+    user = Users.query.filter_by(useremail=signup_form.email.data).first()
     if user:
         flash(USER_ALREADY_EXIST_MESSAGE)
         return redirect(url_for('auth.signup'))
