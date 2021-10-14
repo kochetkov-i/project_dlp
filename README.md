@@ -1,5 +1,32 @@
 # project_dlp
 
+![alt text](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)
+Помимо travis-ci в проекте используется линтер Flake8
+
+для запуска локально:
+- стартуем локальный сервер postgres
+- с помощью миграций создаем/обновляем бд [ flask db upgrade ]
+- создаем конфиг файл webapp/config.py 
+```py
+class Config:
+    DEBUG = True
+    TESTING = False
+    DATABASE_HOST = 'localhost'
+    DATABASE_USER = 'b'
+    DATABASE_PASSWORD = ''
+    DATABASE_PORT = '5432'
+    DATABASE_NAME = 'db_moneycollect'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}:{}/{}'.format(
+        DATABASE_USER, DATABASE_PASSWORD,
+        DATABASE_HOST, DATABASE_PORT,
+        DATABASE_NAME
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = ''
+    FLASK_APP = 'webapp'
+    FLASK_ADMIN_SWATCH = 'cerulean'
+```
+
 ## Веб приложение: сайт для размещелния сбора средств (краундфандинг)
 ### Цель проекта: Разработать сайт для сбора средств. Дать пользователям возможность регистрироваться и создавать объявления по сбору.
 
