@@ -33,7 +33,7 @@ def procces_login():
     if form.validate_on_submit():
         user = Users.query.filter_by(useremail=form.email.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             flash(LOGIN_MESSAGE)
             return redirect(url_for('main.index'))
     flash(FAIL_LOGIN_MESSAGE)
