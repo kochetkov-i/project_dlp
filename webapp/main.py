@@ -28,7 +28,7 @@ def contact_us():
 def edit_moneycollector():
     title = "Редактирование"
     return render_template(
-        'edit_moneycollector.html',
+        'collect/edit_moneycollector.html',
         page_title=title,
         current_user=current_user)
 
@@ -38,13 +38,7 @@ def withdrawal_money():
     withdrawa_form = WithdrawalMoneyForm()
     title = "Сбор"
     return render_template(
-        'withdrawal_money.html',
+        'collect/withdrawal_money.html',
         page_title=title,
         form=withdrawa_form,
         current_user=current_user)
-
-
-@main.route('/admin')
-@login_required
-def admin_index():
-    return 'Привет админ'

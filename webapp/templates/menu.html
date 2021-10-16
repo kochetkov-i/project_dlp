@@ -15,14 +15,19 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('main.contact_us') }}">Contact Us</a>
         </li>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="#">{{ current_user.username }}</a>
+        </li>
+        {% endif %}
       </ul>
       <div class="text-end">
         {% if current_user.is_authenticated %}
-        <p>{{ current_user.username }}</p>
-        {% endif %}
-        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary" role="button" >Login</a>
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary" role="button" >Logout</a>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary" role="button" >Login</a>
         <a href="{{ url_for('auth.signup') }}" class="btn btn-outline-primary" role="button" >Sign-up</a>
+        {% endif %}
       </div>
     </div>
   </nav>

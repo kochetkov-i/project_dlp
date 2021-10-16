@@ -17,7 +17,7 @@ def login():
     title = "Авторизация"
     login_form = LoginForm()
     return render_template(
-        'login.html',
+        'auth/login.html',
         page_title=title,
         form=login_form,
         current_user=current_user)
@@ -26,11 +26,10 @@ def login():
 @blueprint.route('/prosess-login', methods=['POST'])
 def procces_login():
     form = LoginForm()
-
     if form.validate_on_submit():
         user = Users.query.filter_by(useremail=form.email.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             flash(messages.LOGIN_MESSAGE)
             return redirect(url_for('main.index'))
     flash(messages.FAIL_LOGIN_MESSAGE)
@@ -42,7 +41,7 @@ def signup():
     signup_form = SignUpForm()
     title = "Регистрация"
     return render_template(
-        'signup.html',
+        'auth/signup.html',
         page_title=title,
         form=signup_form)
 
