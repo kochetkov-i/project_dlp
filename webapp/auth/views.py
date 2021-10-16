@@ -1,13 +1,12 @@
 from flask import Blueprint
 from webapp import db
 from flask import render_template, redirect, url_for, flash
-from webapp.forms import LoginForm, SignUpForm
+from webapp.auth.forms import LoginForm, SignUpForm
 from webapp.auth.models import Users
 from flask_login import login_user, logout_user, current_user
 from webapp.auth import messages_const as messages
 
 
-# auth = Blueprint('auth', __name__)
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 
