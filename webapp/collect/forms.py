@@ -4,7 +4,7 @@ from wtforms import TextAreaField, FileField
 from wtforms.validators import DataRequired, Length, Optional
 
 
-class WithdrawalMoneyForm(FlaskForm):
+class EditCollectForm(FlaskForm):
     name = StringField(
         'Название',
         validators=[
@@ -21,9 +21,6 @@ class WithdrawalMoneyForm(FlaskForm):
         'Приложение',
         validators=[Optional()],
         render_kw={"class": "form-control"})
-    edit = SubmitField(
-        'Редактировать',
-        render_kw={"class": "btn btn-primary"})
     submit = SubmitField(
         'Сохранить',
         render_kw={"class": "btn btn-primary"})

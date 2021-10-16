@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="col-4">
-    <div class="box">
+<div class="box">
+    <div class="col-4">
         <form action="" method="POST">
             {{ form.hidden_tag() }}
-            <p>
+            <div class="form-group">
                 {{ form.name.label }}
                 {{ form.name() }}
-            </p>
-            <p>
+            </div>
+            <div class="form-group">
                 {{ form.description.label }}
                 {{ form.description() }}
-            </p>
-            <p>
+            </div>
+            <div class="form-group">
                 {{ form.attach.label }}
                 {{ form.attach() }}
-            </p>
-            <p>
-                {{ form.edit() }}
-            </p>
-            <p>
+            </div>
+            <br>
+            <div class="form-group">
                 {{ form.submit() }}
-            </p>
+            </div>
         </form>
     </div>
 </div>
