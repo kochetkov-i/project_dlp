@@ -26,7 +26,7 @@ def create_app():
     from webapp.auth.views import blueprint as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from webapp.main import main as main_blueprint
+    from webapp.main.views import blueprint as main_blueprint
     app.register_blueprint(main_blueprint)
 
     from webapp.collect.views import blueprint as collect_blueprint
