@@ -1,12 +1,15 @@
-from webapp.decorators import admin_required
-from flask import render_template
-from flask import Blueprint
+from flask_admin import AdminIndexView
+from flask import redirect, url_for, request
+from flask_login import current_user
 
 
-blueprint = Blueprint('admin', __name__, url_prefix='/admin')
+class WebappModelView(AdminIndexView):
 
+    def is_accessible(self):
+        return (current_user.is_authenticated and
+                current_user.userrole == 'admin' and
+                not current_user.is_deleted)
 
-@blueprint.route('/admin')
-@admin_required
-def admin_index():
-    return render_template('admin/index.html')
+    def inaccessible_callback(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for('auth.login', next=request.url))
