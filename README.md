@@ -1,6 +1,6 @@
 # project_dlp
 
-![alt text](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)
+[![Build Status](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)](https://app.travis-ci.com/kochetkov-i/project_dlp)
 travis-ci запускает линтер Flake8 с дефолтными параметрами
 
 для запуска локально:
