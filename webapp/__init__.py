@@ -1,16 +1,13 @@
-from flask_migrate import Migrate
-from webapp.config import Config
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import LoginManager
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from webapp.config import Config
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
-admin = Admin(name=Config.FLASK_APP)
 
 
 def create_app():
@@ -24,14 +21,18 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'login'
 
-    from .auth import auth as auth_blueprint
+    admin.init_app(app)
+
+    from webapp.auth.views import blueprint as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from .main import main as main_blueprint
+    from webapp.main.views import blueprint as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    admin.init_app(app)
-    from webapp.models import Users
-    admin.add_view(ModelView(Users, db.session))
+    from webapp.collect.views import blueprint as collect_blueprint
+    app.register_blueprint(collect_blueprint)
 
     return app
+
+
+from webapp.admin import admin
