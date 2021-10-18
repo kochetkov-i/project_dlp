@@ -1,7 +1,8 @@
 # project_dlp
 
 [![Build Status](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)](https://app.travis-ci.com/kochetkov-i/project_dlp)
-travis-ci запускает линтер Flake8 с дефолтными параметрами
+
+travis-ci запускает линтер Flake8 с отключенными проверками E402,W503
 
 для запуска локально:
 - стартуем локальный сервер postgres
