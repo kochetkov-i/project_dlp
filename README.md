@@ -1,7 +1,7 @@
 # project_dlp
 
 ![alt text](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)
-Помимо travis-ci в проекте используется линтер Flake8
+travis-ci запускает линтер Flake8 с дефолтными параметрами
 
 для запуска локально:
 - стартуем локальный сервер postgres
@@ -25,6 +25,7 @@ class Config:
     SECRET_KEY = ''
     FLASK_APP = 'webapp'
     FLASK_ADMIN_SWATCH = 'cerulean'
+    REMEMBER_COOKIE_DURATION = timedelta(days=5)
 ```
 - запускаем приложение [ flask run ]
 
