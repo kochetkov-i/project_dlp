@@ -24,8 +24,8 @@ def edit_collect():
 def procces_edit_collect():
     edit_collect_form = EditCollectForm()
     if not current_user.is_authenticated:
-        flash("")
-        return redirect(url_for('auth.signup'))
+        flash("Создать сбор могут только зарегестрированные пользователи")
+        return redirect(url_for('auth.login'))
     if edit_collect_form.validate_on_submit():
         delta = timedelta(days=edit_collect_form.max_days.data)
         new_collection = Collections(
