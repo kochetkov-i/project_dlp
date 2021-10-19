@@ -1,7 +1,8 @@
 # project_dlp
 
-![alt text](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)
-Помимо travis-ci в проекте используется линтер Flake8
+[![Build Status](https://app.travis-ci.com/kochetkov-i/project_dlp.svg?branch=main)](https://app.travis-ci.com/kochetkov-i/project_dlp)
+
+travis-ci запускает линтер Flake8 с отключенными проверками E402,W503
 
 для запуска локально:
 - стартуем локальный сервер postgres
@@ -25,6 +26,7 @@ class Config:
     SECRET_KEY = ''
     FLASK_APP = 'webapp'
     FLASK_ADMIN_SWATCH = 'cerulean'
+    REMEMBER_COOKIE_DURATION = timedelta(days=5)
 ```
 - запускаем приложение [ flask run ]
 
