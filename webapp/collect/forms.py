@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
-from wtforms import TextAreaField, FileField
-from wtforms.validators import DataRequired, Length, Optional, NumberRange
+from wtforms import StringField, SubmitField, IntegerField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms.validators import DataRequired, Length, NumberRange
 
 
 class EditCollectForm(FlaskForm):
@@ -17,7 +17,7 @@ class EditCollectForm(FlaskForm):
             DataRequired(),
             Length(min=1, max=2048)],
         render_kw={"class": "form-control"})
-    count = IntegerField(
+    collection_amount = IntegerField(
         'Сумма сбора от 1 до 500000',
         validators=[
             DataRequired(),
@@ -31,7 +31,8 @@ class EditCollectForm(FlaskForm):
         render_kw={"class": "form-control"})
     attach = FileField(
         'Приложение',
-        validators=[Optional()],
+        validators=[
+            FileAllowed(['jpg', 'png'], 'Images only!')],
         render_kw={"class": "form-control"})
     submit = SubmitField(
         'Сохранить',
