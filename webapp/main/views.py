@@ -11,9 +11,9 @@ blueprint = Blueprint('main', __name__)
 def index():
     collections = Collections.query.filter_by(
         is_end=False
-        ).order_by(
-            asc(Collections.finish_time)
-            )
+    ).order_by(
+        asc(Collections.finish_time)
+    )
     title = "Главная"
     return render_template(
         'main/index.html',
