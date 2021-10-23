@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-sm">
         {% for element in advertisement %}
-          <a href="{{ url_for('user_list.adver') }}"> {{ element.collection_name }} </a>
+         {{ element.collection_name }}
         {% endfor %}
       </div>
     </div>
