@@ -1,77 +1,56 @@
 from flask import Blueprint
-from . import db
+from webapp import db
 from flask import render_template, redirect, url_for, flash
-from webapp.forms import LoginForm, SignUpForm
-from webapp.models import Users, Collections
+from webapp.auth.forms import LoginForm, SignUpForm
+from webapp.auth.models import Users
 from flask_login import login_user, logout_user, current_user
-from webapp.auth_messages_const import LOGIN_MESSAGE, LOGOUT_MESSAGE
-from webapp.auth_messages_const import USER_ALREADY_EXIST_MESSAGE
-from webapp.auth_messages_const import INCORRECT_FILL_FORM_MESSAGE
-from webapp.auth_messages_const import FAIL_LOGIN_MESSAGE
+from webapp.auth import messages_const as messages
+
+blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-
-auth = Blueprint('auth', __name__)
-
-
-@auth.route('/login')
+@blueprint.route('/login')
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     title = "Авторизация"
     login_form = LoginForm()
     return render_template(
-        'login.html',
+        'auth/login.html',
         page_title=title,
         form=login_form,
         current_user=current_user)
 
 
-@auth.route('/user_list')
-def user_list():
-    if current_user.is_authenticated:
-        title = 'Лист объявлений'
-        username = current_user
-        advertisement = Collections.query.filter_by(collector_user_id=username.id).all()
-        return render_template(
-            'user_list_adver.user_list.html',
-            title=title,
-            username=username,
-            advertisement=advertisement)
-    else:
-        return redirect(url_for('login'))
-
-
-@auth.route('/prosess-login', methods=['POST'])
+@blueprint.route('/prosess-login', methods=['POST'])
 def procces_login():
     form = LoginForm()
-
     if form.validate_on_submit():
         user = Users.query.filter_by(useremail=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            flash(LOGIN_MESSAGE)
+            flash(messages.LOGIN_MESSAGE)
             return redirect(url_for('main.index'))
-    flash(FAIL_LOGIN_MESSAGE)
+    flash(messages.FAIL_LOGIN_MESSAGE)
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/signup')
+@blueprint.route('/signup')
 def signup():
     signup_form = SignUpForm()
     title = "Регистрация"
     return render_template(
-        'signup.html',
+        'auth/signup.html',
         page_title=title,
         form=signup_form)
 
 
-@auth.route('/procces_signup', methods=['POST'])
+@blueprint.route('/procces_signup', methods=['POST'])
 def procces_signup():
     signup_form = SignUpForm()
     user = Users.query.filter_by(useremail=signup_form.email.data).first()
     if user:
-        flash(USER_ALREADY_EXIST_MESSAGE)
+        flash(messages.USER_ALREADY_EXIST_MESSAGE)
         return redirect(url_for('auth.signup'))
     if signup_form.validate_on_submit():
         new_user = Users(
@@ -87,12 +66,12 @@ def procces_signup():
 
         return redirect(url_for('auth.login'))
 
-    flash(INCORRECT_FILL_FORM_MESSAGE)
+    flash(messages.INCORRECT_FILL_FORM_MESSAGE)
     return redirect(url_for('auth.signup'))
 
 
-@auth.route('/logout')
+@blueprint.route('/logout')
 def logout():
     logout_user()
-    flash(LOGOUT_MESSAGE)
+    flash(messages.LOGOUT_MESSAGE)
     return redirect(url_for('main.index'))

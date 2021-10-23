@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% for collection in data %}
+        <div class="card" style="width: 54rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{ collection.collection_name }}</h5>
+            <p class="card-text">{{ collection.description }}</p>
+            <a href="#" class="btn btn-primary">Подробнее</a>
+            <a href="#" class="btn btn-primary">Пожертвовать</a>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}

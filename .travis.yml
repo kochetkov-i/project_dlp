@@ -1,3 +1,10 @@
 language: python
 python:
   - 3.9
+
+install: 
+  - pip install -r webapp/requirements.txt
+
+scripts:
+  - cd webapp/
+  - flake8 -v --ignore=E402,W503
