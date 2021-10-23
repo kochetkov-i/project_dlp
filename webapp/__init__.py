@@ -3,11 +3,13 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from webapp.config import Config
+import os
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 def create_app():

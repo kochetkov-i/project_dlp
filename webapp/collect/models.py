@@ -1,3 +1,4 @@
+from sqlalchemy.orm import relationship
 from webapp import db
 from webapp.auth.models import Users
 
@@ -15,6 +16,7 @@ class Collections(db.Model):
     created_date = db.Column(db.DateTime, nullable=False)
     last_modify = db.Column(db.DateTime, nullable=False)
     is_end = db.Column(db.Boolean, nullable=False)
+    images = relationship("Images", back_populates="collection")
 
     def __repr__(self):
         return '<Collection Id:{} Name:{} Is_End:{}>'.format(
@@ -30,6 +32,7 @@ class Images(db.Model):
         nullable=False)
     link = db.Column(db.String(256), nullable=False)
     upload_date = db.Column(db.DateTime, nullable=False)
+    collection = relationship(Collections, back_populates="images")
 
     def __repr__(self):
         return '<Image Id:{} Collection Id:{}>'.format(
