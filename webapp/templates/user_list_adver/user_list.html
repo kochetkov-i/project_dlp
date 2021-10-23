@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    {{ title }}
+    {{ username.username }}
+    <div class="row">
+      <div class="col-sm">
+        {% for element in advertisement %}
+          <a href="{{ url_for('user_list.adver') }}"> {{ element.collection_name }} </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

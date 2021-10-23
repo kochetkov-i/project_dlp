@@ -30,6 +30,9 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from webapp.user_list.advertisement import adver as adver_blueprint
+    app.register_blueprint(adver_blueprint)
+
     admin.init_app(app)
     from webapp.models import Users
     admin.add_view(ModelView(Users, db.session))
