@@ -1,7 +1,8 @@
 from flask import render_template, redirect, url_for, flash, Blueprint
 from flask_login import current_user, login_required
 from webapp.collect.forms import EditCollectForm
-from webapp import db
+from webapp import db, basedir
+from webapp.config import Config
 from webapp.collect.models import Collections, Images
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
@@ -21,6 +22,39 @@ def edit_collect():
         page_title=title,
         form=edit_collect_form,
         current_user=current_user)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in Config.ALLOWED_EXTENSIONS
+
+
+def upload_file(attach_files, collection_id):
+    for file in attach_files:
+        filename = secure_filename(file.filename)
+        folder = os.path.join(
+            basedir,
+            Config.UPLOAD_FOLDER,
+            str(collection_id)
+        )
+        full_path = os.path.join(folder, filename)
+        link_path = os.path.join(
+            Config.UPLOAD_FOLDER,
+            str(collection_id),
+            filename
+        )
+        if not os.path.exists(folder):
+            os.makedirs(folder, exist_ok=True)
+
+        file.save(full_path)
+
+        new_image = Images(
+            collections_id=collection_id,
+            link=link_path,
+            upload_date=datetime.now()
+        )
+        db.session.add(new_image)
+        db.session.commit()
 
 
 @blueprint.route('/procces_edit_collect', methods=['GET', 'POST'])
@@ -43,18 +77,9 @@ def procces_edit_collect():
         db.session.commit()
         db.session.refresh(new_collection)
 
-        if edit_collect_form.attach.data:
-            filename = secure_filename(edit_collect_form.attach.data)
-            full_path = os.path.join('webapp/static/images/', filename)
-            edit_collect_form.attach.data.save(full_path)
-
-            new_image = Images(
-                collections_id=new_collection.id,
-                link=filename,
-                upload_date=datetime.now()
-            )
-            db.session.add(new_image)
-            db.session.commit()
+        attach_files = edit_collect_form.attach.data
+        if attach_files:
+            upload_file(attach_files, new_collection.id)
 
         return redirect(url_for('main.index'))
 

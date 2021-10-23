@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, TextAreaField
-from flask_wtf.file import FileField, FileAllowed
+from wtforms import MultipleFileField
+from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Length, NumberRange
 
 
@@ -29,10 +30,10 @@ class EditCollectForm(FlaskForm):
             DataRequired(),
             NumberRange(min=1, max=365)],
         render_kw={"class": "form-control"})
-    attach = FileField(
-        'Приложение',
+    attach = MultipleFileField(
+        'Изображения',
         validators=[
-            FileAllowed(['jpg', 'png'], 'Images only!')],
+            FileAllowed(['jpg', 'png'], 'Только картинки jpg и png')],
         render_kw={"class": "form-control"})
     submit = SubmitField(
         'Сохранить',

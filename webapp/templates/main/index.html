@@ -3,7 +3,27 @@
 {% block body %}
     {% for collection in data %}
         <div class="card" style="width: 54rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <div id="carouselExampleControls-{{ collection.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for img in collection.images %}
+                    {% if loop.first %}
+                        <div class="carousel-item active">
+                    {% else %}
+                        <div class="carousel-item">
+                    {% endif %}
+                        <img src="{{ img.link }}" class="d-block w-100" alt="...">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-{{ collection.id }}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-{{ collection.id }}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
@@ -14,3 +34,4 @@
         <br>
     {% endfor %}
 {% endblock %}
+
