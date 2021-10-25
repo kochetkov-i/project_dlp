@@ -11,7 +11,7 @@
                     {% else %}
                         <div class="carousel-item">
                     {% endif %}
-                        <img src="{{ img.link }}" class="d-block w-100" alt="...">
+                        <img src="{{ url_for('static', filename=img.link) }}" class="d-block w-100" alt="...">
                     </div>
                     {% endfor %}
                 </div>
@@ -27,7 +27,7 @@
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
-            <a href="#" class="btn btn-primary">Подробнее</a>
+            <a href="{{ url_for('collect.edit_collect', id=collection.id) }}" class="btn btn-primary">Подробнее</a>
             <a href="#" class="btn btn-primary">Пожертвовать</a>
             </div>
         </div>

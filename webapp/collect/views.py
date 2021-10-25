@@ -12,16 +12,26 @@ import os
 blueprint = Blueprint('collect', __name__, url_prefix='/collect')
 
 
-@blueprint.route('/edit_collect')
+@blueprint.route('/edit_collect/<int:id>')
 @login_required
-def edit_collect():
+def edit_collect(id):
     edit_collect_form = EditCollectForm()
+    collection = None
+    if id:
+        collection = Collections.query.filter_by(id=id).first()
+        edit_collect_form.name.data = collection.collection_name
+        edit_collect_form.description.data = collection.description
+        edit_collect_form.collection_amount.data = collection.finish_count
+        edit_collect_form.max_days.data = (
+            collection.finish_time - collection.created_date).days
+
     title = "Редактирование"
     return render_template(
         'collect/edit_collect.html',
         page_title=title,
         form=edit_collect_form,
-        current_user=current_user)
+        current_user=current_user,
+        collection=collection)
 
 
 def allowed_file(filename):
