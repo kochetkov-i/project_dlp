@@ -25,8 +25,10 @@
               <span class="visually-hidden">Next</span>
             </button>
         </div>
+        <form action="{{ url_for('collect.procces_edit_collect', id=collection.id) }}" method="POST" enctype="multipart/form-data">
+        {% else %}
+        <form action="{{ url_for('collect.procces_edit_collect', id=0) }}" method="POST" enctype="multipart/form-data">
         {% endif %}
-        <form action="{{ url_for('collect.procces_edit_collect') }}" method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.name.label }}

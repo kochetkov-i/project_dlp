@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for collection in data %}
-        <div class="card" style="width: 54rem;">
+    <div class="col">
+        <div class="card">
             <div id="carouselExampleControls-{{ collection.id }}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     {% for img in collection.images %}
@@ -27,11 +29,14 @@
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
-            <a href="{{ url_for('collect.edit_collect', id=collection.id) }}" class="btn btn-primary">Подробнее</a>
+            <a href="{{ url_for('collect.edit_collect', id=collection.id) }}" class="btn btn-primary">Редактировать</a>
+            <a href="{{ url_for('collect.view_collect', id=collection.id) }}" class="btn btn-primary">Открыть</a>
             <a href="#" class="btn btn-primary">Пожертвовать</a>
             </div>
         </div>
+    </div>
         <br>
     {% endfor %}
+    </div>
 {% endblock %}
 

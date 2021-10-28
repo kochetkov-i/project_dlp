@@ -12,6 +12,18 @@ import os
 blueprint = Blueprint('collect', __name__, url_prefix='/collect')
 
 
+@blueprint.route('/view_collect/<int:id>')
+def view_collect(id):
+    if id:
+        collection = Collections.query.filter_by(id=id).first()
+        title = "Просмотр"
+        return render_template(
+            'collect/view_collect.html',
+            page_title=title,
+            current_user=current_user,
+            collection=collection)
+
+
 @blueprint.route('/edit_collect/<int:id>')
 @login_required
 def edit_collect(id):
@@ -41,55 +53,66 @@ def allowed_file(filename):
 
 def upload_file(attach_files, collection_id):
     for file in attach_files:
-        filename = secure_filename(file.filename)
-        folder = os.path.join(
-            basedir,
-            Config.UPLOAD_FOLDER,
-            str(collection_id)
-        )
-        full_path = os.path.join(folder, filename)
-        link_path = os.path.join(
-            Config.UPLOAD_FOLDER,
-            str(collection_id),
-            filename
-        )
-        if not os.path.exists(folder):
-            os.makedirs(folder, exist_ok=True)
+        if file.filename and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            folder = os.path.join(
+                basedir,
+                Config.UPLOAD_FOLDER,
+                str(collection_id)
+            )
+            full_path = os.path.join(folder, filename)
+            link_path = os.path.join(
+                Config.UPLOAD_FOLDER,
+                str(collection_id),
+                filename
+            )
+            if not os.path.exists(folder):
+                os.makedirs(folder, exist_ok=True)
 
-        file.save(full_path)
+            file.save(full_path)
 
-        new_image = Images(
-            collections_id=collection_id,
-            link=link_path,
-            upload_date=datetime.now()
-        )
-        db.session.add(new_image)
-        db.session.commit()
+            new_image = Images(
+                collections_id=collection_id,
+                link=link_path,
+                upload_date=datetime.now()
+            )
+            db.session.add(new_image)
+            db.session.commit()
+        else:
+            flash('Can not upload files')
 
 
-@blueprint.route('/procces_edit_collect', methods=['GET', 'POST'])
+@blueprint.route('/procces_edit_collect/<int:id>', methods=['GET', 'POST'])
 @login_required
-def procces_edit_collect():
+def procces_edit_collect(id):
     edit_collect_form = EditCollectForm()
+    delta = timedelta(days=edit_collect_form.max_days.data)
     if edit_collect_form.validate_on_submit():
-        delta = timedelta(days=edit_collect_form.max_days.data)
-        new_collection = Collections(
-            collector_user_id=current_user.id,
-            collection_name=edit_collect_form.name.data,
-            description=edit_collect_form.description.data,
-            finish_count=edit_collect_form.collection_amount.data,
-            finish_time=datetime.now() + delta,
-            created_date=datetime.now(),
-            last_modify=datetime.now(),
-            is_end=False)
+        if id:
+            collection = Collections.query.filter_by(id=id).first()
+            collection.last_modify = datetime.now()
+            collection.collection_name = edit_collect_form.name.data
+            collection.description = edit_collect_form.description.data
+            collection.finish_count = edit_collect_form.collection_amount.data
+            collection.finish_time = datetime.now() + delta
+        else:
+            collection = Collections(
+                collector_user_id=current_user.id,
+                collection_name=edit_collect_form.name.data,
+                description=edit_collect_form.description.data,
+                finish_count=edit_collect_form.collection_amount.data,
+                finish_time=datetime.now() + delta,
+                last_modify=datetime.now(),
+                created_date=datetime.now(),
+                is_end=False)
 
-        db.session.add(new_collection)
+        db.session.add(collection)
         db.session.commit()
-        db.session.refresh(new_collection)
+        db.session.refresh(collection)
 
         attach_files = edit_collect_form.attach.data
-        if attach_files:
-            upload_file(attach_files, new_collection.id)
+        if len(attach_files):
+            upload_file(attach_files, collection.id)
 
         return redirect(url_for('main.index'))
 
