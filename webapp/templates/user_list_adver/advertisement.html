@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for information in info %}
+    <div class="container-fluid">
+    {% for information in advertisement %}
         {{ information }}
     {% endfor %}
+    </div>
 {% endblock %}

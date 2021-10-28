@@ -3,7 +3,7 @@ from . import db
 from flask import render_template, redirect, url_for, flash
 from webapp.forms import LoginForm, SignUpForm
 from webapp.models import Users, Collections
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_required, login_user, logout_user, current_user
 from webapp.auth_messages_const import LOGIN_MESSAGE, LOGOUT_MESSAGE
 from webapp.auth_messages_const import USER_ALREADY_EXIST_MESSAGE
 from webapp.auth_messages_const import INCORRECT_FILL_FORM_MESSAGE
@@ -23,21 +23,6 @@ def login():
         page_title=title,
         form=login_form,
         current_user=current_user)
-
-
-@auth.route('/user_list')
-def user_list():
-    if current_user.is_authenticated:
-        title = 'Лист объявлений'
-        username = current_user
-        advertisement = Collections.query.filter_by(collector_user_id=username.id).all()
-        return render_template(
-            'user_list_adver.user_list.html',
-            title=title,
-            username=username,
-            advertisement=advertisement)
-    else:
-        return redirect(url_for('login'))
 
 
 @auth.route('/prosess-login', methods=['POST'])

@@ -3,7 +3,8 @@ from webapp import db
 from flask import render_template, redirect, url_for, flash
 from webapp.auth.forms import LoginForm, SignUpForm
 from webapp.auth.models import Users
-from flask_login import login_user, logout_user, current_user
+from webapp.collect.models import Collections
+from flask_login import login_required, login_user, logout_user, current_user
 from webapp.auth import messages_const as messages
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
@@ -75,3 +76,13 @@ def logout():
     logout_user()
     flash(messages.LOGOUT_MESSAGE)
     return redirect(url_for('main.index'))
+
+@login_required
+@blueprint.route('/user_advertisement')
+def user_list():
+    title = 'Лист объявлений пользователя'
+    advertisement = Collections.query.filter_by(collector_user_id=current_user.id).all()
+    return render_template(
+        'user_list_adver/user_advertisement.html',
+        title=title,
+        advertisement=advertisement)
