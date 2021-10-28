@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="text-centr">
+      <h1> {{ title }} </h1>
+      {% for element in advertisement %}
+          <div class="row">
+            <h3> {{ element.collection_name }} <a href="{{ (url_for('collect.edit_collect')) }}" > 
+            <button type="button" class="btn btn-primary">Edit</button></a><br></h3>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
