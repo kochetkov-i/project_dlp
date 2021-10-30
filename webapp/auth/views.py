@@ -77,6 +77,7 @@ def logout():
     flash(messages.LOGOUT_MESSAGE)
     return redirect(url_for('main.index'))
 
+
 @login_required
 @blueprint.route('/user_advertisement')
 def user_list():

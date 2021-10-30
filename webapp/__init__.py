@@ -34,6 +34,9 @@ def create_app():
     from webapp.collect.views import blueprint as collect_blueprint
     app.register_blueprint(collect_blueprint)
 
+    from webapp.contact_us.views import contact_us as contact_blueprint
+    app.register_blueprint(contact_blueprint)
+
     return app
 
 
