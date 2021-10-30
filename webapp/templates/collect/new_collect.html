@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="box">
+    <div class="col-4">
+        <form action="{{ url_for('collect.procces_new_collect') }}" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label }}
+                {{ form.name() }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label }}
+                {{ form.description() }}
+            </div>
+            <div class="form-group">
+                {{ form.collection_amount.label }}
+                {{ form.collection_amount() }}
+            </div>
+            <div class="form-group">
+                {{ form.max_days.label }}
+                {{ form.max_days() }}
+            </div>
+            <div class="form-group">
+                {{ form.attach.label }}
+                {{ form.attach() }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.submit() }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
+{%- macro random_int(len) -%}
+  {%- for _ in range(len) -%}
+    {{ range(10) | random }}
+  {%- endfor -%}
+{%- endmacro -%}
+
+{% set carousel_id = random_int(20) %}
+
 {% block body %}
 <div class="box">
     <div class="col-4">
-        {% if collection %}
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls-{{ carousel_id }}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for img in collection.images %}
                     {% if loop.first %}
@@ -16,19 +23,16 @@
                 </div>
                 {% endfor %}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-{{ carousel_id }}" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-{{ carousel_id }}" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
         </div>
         <form action="{{ url_for('collect.procces_edit_collect', id=collection.id) }}" method="POST" enctype="multipart/form-data">
-        {% else %}
-        <form action="{{ url_for('collect.procces_edit_collect', id=0) }}" method="POST" enctype="multipart/form-data">
-        {% endif %}
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.name.label }}
