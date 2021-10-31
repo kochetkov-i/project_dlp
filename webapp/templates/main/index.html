@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block body %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for collection in data %}
-        <div class="card" style="width: 54rem;">
-            <div id="carouselExampleControls-{{ collection.id }}" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="col">
+        <div class="card">
+            <div id="carousel-id-{{ collection.id }}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     {% for img in collection.images %}
                     {% if loop.first %}
@@ -11,15 +14,15 @@
                     {% else %}
                         <div class="carousel-item">
                     {% endif %}
-                        <img src="{{ img.link }}" class="d-block w-100" alt="...">
+                        <img src="{{ url_for('static', filename=img.link) }}" class="d-block w-100" alt="...">
                     </div>
                     {% endfor %}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-{{ collection.id }}" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-id-{{ collection.id }}" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-{{ collection.id }}" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-id-{{ collection.id }}" data-bs-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
@@ -27,11 +30,14 @@
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
-            <a href="#" class="btn btn-primary">Подробнее</a>
+            <a href="{{ url_for('collect.edit_collect', id=collection.id) }}" class="btn btn-primary">Редактировать</a>
+            <a href="{{ url_for('collect.view_collect', id=collection.id) }}" class="btn btn-primary">Открыть</a>
             <a href="#" class="btn btn-primary">Пожертвовать</a>
             </div>
         </div>
+    </div>
         <br>
     {% endfor %}
+    </div>
 {% endblock %}
 
