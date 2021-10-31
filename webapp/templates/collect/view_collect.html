@@ -1,18 +1,10 @@
 {% extends 'base.html' %}
 
-{%- macro random_int(len) -%}
-  {%- for _ in range(len) -%}
-    {{ range(10) | random }}
-  {%- endfor -%}
-{%- endmacro -%}
-
-{% set carousel_id = random_int(20) %}
-
 {% block body %}
     <div class="card" >
         <div class="row no-gutters">
         <div class="col-md-4">
-        <div id="carouselExampleControls-{{ carousel_id }}" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel-id-{{ collection.id }}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 {% for img in collection.images %}
                 {% if loop.first %}
@@ -24,11 +16,11 @@
                 </div>
                 {% endfor %}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-{{ carousel_id }}" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-id-{{ collection.id }}" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-{{ carousel_id }}" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-id-{{ collection.id }}" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
