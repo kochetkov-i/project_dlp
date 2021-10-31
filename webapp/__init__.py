@@ -9,7 +9,10 @@ import os
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)),
+    "static"
+)
 
 
 def create_app():
@@ -36,6 +39,9 @@ def create_app():
 
     from webapp.contact_us.views import contact_us as contact_blueprint
     app.register_blueprint(contact_blueprint)
+
+    from webapp.errors.views import blueprint as errors_blueprint
+    app.register_blueprint(errors_blueprint)
 
     return app
 

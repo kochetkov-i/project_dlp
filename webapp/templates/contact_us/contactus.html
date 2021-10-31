@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    {{ title }}
+    <div class="text-centr">
+        {% for forms in form %}
+            {{ forms }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
