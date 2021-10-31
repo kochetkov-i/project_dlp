@@ -6,7 +6,7 @@
       <h1> {{ title }} </h1>
       {% for element in advertisement %}
           <div class="row">
-            <h3> {{ element.collection_name }} <a href="{{ (url_for('collect.edit_collect')) }}" > 
+            <h3> {{ element.collection_name }} <a href="{{ url_for('collect.edit_collect', id=element.id) }}" > 
             <button type="button" class="btn btn-primary">Edit</button></a><br></h3>
           </div>
       {% endfor %}

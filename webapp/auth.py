@@ -2,8 +2,8 @@ from flask import Blueprint
 from . import db
 from flask import render_template, redirect, url_for, flash
 from webapp.forms import LoginForm, SignUpForm
-from webapp.models import Users, Collections
-from flask_login import login_required, login_user, logout_user, current_user
+from webapp.models import Users
+from flask_login import login_user, logout_user, current_user
 from webapp.auth_messages_const import LOGIN_MESSAGE, LOGOUT_MESSAGE
 from webapp.auth_messages_const import USER_ALREADY_EXIST_MESSAGE
 from webapp.auth_messages_const import INCORRECT_FILL_FORM_MESSAGE

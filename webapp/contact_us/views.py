@@ -1,8 +1,6 @@
 from flask import Blueprint
-from webapp import db
-from flask import render_template, redirect
+from flask import render_template
 from webapp.contact_us.forms import ContacterForm
-from webapp.contact_us.models import Contacter
 
 contact_us = Blueprint('contact_us', __name__)
 
