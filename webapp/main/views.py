@@ -20,4 +20,3 @@ def index():
         page_title=title,
         current_user=current_user,
         data=collections)
-
