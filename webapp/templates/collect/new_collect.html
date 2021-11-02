@@ -5,8 +5,8 @@
     <div class="col-4">
         <form action="{{ url_for('collect.procces_new_collect') }}" method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
-            {% for field in form if not field.hidden %}
-                {% if field.label.text!='Сохранить' and not loop.last %}
+            {% for field in form %}
+                {% if field.label.text != 'CSRF Token' and field.type != 'SubmitField' %}
                 <div class="form-group">
                     {{ field.label }}
                     {{ field() }}

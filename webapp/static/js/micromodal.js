@@ -298,8 +298,12 @@
 MicroModal.init();
 
   window.addEventListener('load', () => {
-    var button = document.querySelector('.paymentModal');
-    button.addEventListener("click", () => {
-      MicroModal.show('modal-1');
-    });
+    var buttons = document.querySelectorAll('.paymentModal');
+    buttons.forEach( (button) => {
+        button.addEventListener("click", () => {
+            var collection_id = button.dataset["id"]
+            console.warn(collection_id)
+            MicroModal.show('modal-1');
+        });
+    })
   })

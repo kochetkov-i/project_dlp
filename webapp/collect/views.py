@@ -152,7 +152,7 @@ def procces_new_collect():
         db.session.refresh(collection)
 
         attach_files = edit_collect_form.attach.data
-        if len(attach_files):
+        if len(attach_files) > 0 and attach_files[0].content_length > 0:
             upload_file(attach_files, collection.id)
 
         return redirect(url_for('main.index'))
