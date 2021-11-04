@@ -302,8 +302,10 @@ MicroModal.init();
     buttons.forEach( (button) => {
         button.addEventListener("click", () => {
             var collection_id = button.dataset["id"]
-            console.warn(collection_id)
             MicroModal.show('modal-1');
+            var link = document.getElementById('paylink');
+            var atr = link.getAttribute("href")
+            link.setAttribute("href", atr + '?amount=' + '300' + '&id=' + collection_id)
         });
     })
   })
