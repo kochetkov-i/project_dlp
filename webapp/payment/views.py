@@ -44,7 +44,7 @@ def yoomoney():
             paymentType="SB",
             sum=amount,
             label=get_label(id)
-            )
+        )
         return redirect(quickpay.redirected_url)
 
 
