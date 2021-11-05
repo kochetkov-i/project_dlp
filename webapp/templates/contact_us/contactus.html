@@ -4,12 +4,6 @@
 <div class="box-fluid">
     <div class="col-4">
     {{ title }}
-        {% for element in user %}
-            {{ element }}
-        {% endfor %}
-        {% for element in email %}
-            {{ element }}
-        {% endfor %}
         <div class="text-centr">
             <form action="{{ url_for('contact_us.procces_new_contact') }}" method="POST" enctype='multipart/form-data'>
                 {{ form.hidden_tag() }}
