@@ -7,18 +7,14 @@
         <div class="text-centr">
             <form action="{{ url_for('contact_us.procces_new_contact') }}" method="POST" enctype='multipart/form-data'>
                 {{ form.hidden_tag() }}
-                <div class="form-group">
-                    {{ form.email.label }}
-                    {{ form.email() }}
-                </div>
-                <div class="form-group">
-                    {{ form.username.label }}
-                    {{ form.username() }}
-                </div>
-                <div class="form-group">
-                    {{ form.text.label }}
-                    {{ form.text() }}
-                </div>
+                {% for fields in form if not fields.hidden %}
+                    {% if fields.label.text!='Отправить' and not loop.last %}
+                    <div class="form-group">
+                        {{ fields.label }}
+                        {{ fields() }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
                 <br>
                 <div class="form-group">
                     {{ form.submit() }}
