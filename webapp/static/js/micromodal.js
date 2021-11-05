@@ -303,9 +303,19 @@ MicroModal.init();
         button.addEventListener("click", () => {
             var collection_id = button.dataset["id"]
             MicroModal.show('modal-1');
-            var link = document.getElementById('paylink');
-            var atr = link.getAttribute("href")
-            link.setAttribute("href", atr + '?amount=' + '300' + '&id=' + collection_id)
+            document.querySelectorAll('.paylinkstatic').forEach( (link) =>{
+                link.addEventListener("click", () => {
+                    var atr = link.getAttribute("href")
+                    var amount = link.getAttribute("amount") + '00'
+                    link.setAttribute("href", atr + '?amount=' + amount + '&id=' + collection_id)
+                });
+            });
+            var customlink = document.getElementById('paylinkcustom')
+            customlink.addEventListener("click", () => {
+                var atr = customlink.getAttribute("href")
+                var amount = document.getElementById('customamountinput').value + '00'
+                customlink.setAttribute("href", atr + '?amount=' + amount + '&id=' + collection_id)
+            });
         });
     })
   })

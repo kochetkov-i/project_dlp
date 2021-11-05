@@ -10,24 +10,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть" data-micromodal-close></button>
       </header>
       <main class="modal-body" id="modal-1-content">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">50 RUB</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">RUB</span>
+          <input type="text" class="form-control" placeholder="Своя сумма" aria-label="Amount" id='customamountinput'>
+          <span class="input-group-text">.00</span>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">100 RUB</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-          <label class="form-check-label" for="inlineRadio2">Своя сумма</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-control" id="amount" name="amount" type="text" value="" placeholder="Своя сумма" disabled>
-      </div>
       </main>
       <footer class="modal-footer">
-        <a href="{{ url_for('payment.fondy') }}" id='paylink' class="btn btn-primary">Перевести</a>
+        <div class="btn-group">
+          <a href="{{ url_for('payment.fondy') }}" id='paylinkstatic' amount='50' class="btn btn-primary paylinkstatic">50 RUB</a>
+          <a href="{{ url_for('payment.fondy') }}" id='paylinkstatic' amount='100' class="btn btn-primary paylinkstatic">100 RUB</a>
+          <a href="{{ url_for('payment.fondy') }}" id='paylinkcustom' class="btn btn-primary">Своя сумма</a>
+        </div>
         <button class="btn btn-secondary" data-micromodal-close aria-label="Закрыть диалоговое окно">Отменить</button>
       </footer>
     </div>
