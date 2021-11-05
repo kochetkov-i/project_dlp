@@ -7,8 +7,7 @@ class Reporter(db.Model):
     text = db.Column(db.Text, nullable=False)
     email = db.Column(
         db.String(64),
-        index=True,
-        unique=True
+        index=True
     )
 
     def __repr__(self):

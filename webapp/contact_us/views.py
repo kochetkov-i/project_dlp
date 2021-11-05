@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user
 from webapp import db
 from webapp.contact_us.models import Reporter
-from webapp.auth.models import Users
 from webapp.contact_us.forms import ReporterForm
 
 
@@ -13,6 +12,8 @@ contact_us = Blueprint('contact_us', __name__)
 def contact():
     title = 'Форма обратной связи'
     form = ReporterForm()
+    if current_user.is_authenticated:
+        form.email.data = current_user.useremail
     return render_template(
         'contact_us/contactus.html',
         title=title,
@@ -20,20 +21,14 @@ def contact():
     )
 
 
-@contact_us.route('/procces_new_contact/<int:id>', methods=['POST'])
-def procces_new_contact(id):
+@contact_us.route('/procces_new_contact', methods=['POST'])
+def procces_new_contact():
     post_contact = ReporterForm()
     if post_contact.validate_on_submit():
-        user_email = current_user
-        if user_email:
-            user_email.useremail = post_contact.email.data
-            user_email.username = post_contact.username.data,
         report = Reporter(
             email=post_contact.email.data,
             username=post_contact.username.data,
-            text=post_contact.text.data
-
-        )
+            text=post_contact.text.data)
         db.session.add(report)
         db.session.commit()
 
