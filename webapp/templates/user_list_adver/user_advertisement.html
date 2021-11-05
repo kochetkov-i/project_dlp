@@ -4,10 +4,10 @@
   <div class="container-fluid">
     <div class="text-centr">
       <h1> {{ title }} </h1>
-      {% for element in advertisement %}
-          <div class="row">
-            <h3> {{ element.collection_name }} <a href="{{ url_for('collect.edit_collect', id=element.id) }}" > 
-            <button type="button" class="btn btn-primary">Edit</button></a><br></h3>
+      {% for collect in collections %}
+          <div class="row-8">
+            {{ collect.collection_name }} <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" >
+            <button type="button" class="btn btn-primary">Edit</button></a><br>
           </div>
       {% endfor %}
     </div>

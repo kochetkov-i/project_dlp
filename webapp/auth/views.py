@@ -82,9 +82,9 @@ def logout():
 @blueprint.route('/user_advertisement')
 def user_list():
     title = 'Лист объявлений пользователя'
-    advertisement = Collections.query.filter_by(
+    collections = Collections.query.filter_by(
         collector_user_id=current_user.id).all()
     return render_template(
         'user_list_adver/user_advertisement.html',
         title=title,
-        advertisement=advertisement)
+        collections=collections)
