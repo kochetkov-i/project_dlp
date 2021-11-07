@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <div class="container-fluid">
-    <div class="text-centr">
-      <h1> {{ title }} </h1>
-      {% for collect in collections %}
-          <div class="row-8">
-            {{ collect.collection_name }} <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" >
-            <button type="button" class="btn btn-primary">Edit</button></a><br>
-          </div>
-      {% endfor %}
-    </div>
+  {% for collect in collections %}
+  <div class="card-body">
+    <h5 class="card-title">{{ collect.collection_name }}</h5>
+    <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" class="btn btn-primary">Редактировать</a>
   </div>
+  {% endfor %}
 {% endblock %}

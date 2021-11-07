@@ -11,6 +11,6 @@ class Reporter(db.Model):
     )
 
     def __repr__(self):
-        return '<Contacter username:{} text:{}>'.format(
-            self.username, self.text
+        return '<Contacter username:{} text:{} email:{}>'.format(
+            self.username, self.text, self.email
         )
