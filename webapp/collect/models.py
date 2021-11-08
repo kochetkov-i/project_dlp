@@ -12,7 +12,7 @@ class Collections(db.Model):
     collection_name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text, nullable=False)
     finish_count = db.Column(db.Integer, nullable=False)
-    amount = db.Column(db.Integer)
+    amount = db.Column(db.Integer, default=0)
     finish_time = db.Column(db.DateTime, nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)
     last_modify = db.Column(db.DateTime, nullable=False)
