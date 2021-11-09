@@ -16,6 +16,13 @@ def get_label(id):
     return "{}-{}".format(id, uuid.uuid4().hex)
 
 
+def get_collection(id):
+    collection = Collections.query.filter_by(id=id).first()
+    if collection:
+        return collection
+    abort(400)
+
+
 def get_payment_result(payment_label, amount, collection):
     if payment_label and amount == 666:
         return {
@@ -43,16 +50,20 @@ def get_payment_result(payment_label, amount, collection):
             'label': payment_label,
             'type': 'mixedcard'
         }
+    abort(400)
 
 
 @blueprint.route('/checkout')
 def checkout():
-    amount = request.args.get('amount')
+    try:
+        amount = int(request.args.get('amount'))
+    except(TypeError):
+        abort(400)
     collection_id = request.args.get('id')
     if (amount > 0) and collection_id:
         checkout_form = CheckoutForm()
         checkout_form.amount.data = amount
-        collection = Collections.query.filter_by(id=collection_id).first()
+        collection = get_collection(collection_id)
         checkout_form.collection_id.data = collection_id
         checkout_form.collection_name.data = collection.collection_name
         title = "Подтвердить перевод"
@@ -67,16 +78,15 @@ def checkout():
 @blueprint.route('/procces_pay', methods=['POST'])
 def procces_pay():
     checkout_form = CheckoutForm()
-    if checkout_form:
+    if checkout_form.validate_on_submit:
         collection_id = checkout_form.collection_id.data
-        collection = Collections.query.filter_by(id=collection_id).first()
+        collection = get_collection(collection_id)
         payment_label = get_label(collection_id)
         operation = get_payment_result(
-                payment_label,
-                checkout_form.amount.data,
-                collection
-                )
-        if operation['status'] == 'success':
+            payment_label,
+            checkout_form.amount.data,
+            collection)
+        if operation and (operation['status'] == 'success'):
             transaction = Transactions(**operation)
 
             db.session.add(transaction)
@@ -88,9 +98,12 @@ def procces_pay():
 
 @blueprint.route('/fondy')
 def fondy():
-    amount = request.args.get('amount')
-    id = request.args.get('id')
-    if id and amount:
+    try:
+        amount = int(request.args.get('amount'))
+    except(TypeError):
+        abort(400)
+    collection_id = request.args.get('id')
+    if (amount > 0) and collection_id:
         api = Api(merchant_id=1396424, secret_key='test')
         checkout = Checkout(api=api)
         data = {
@@ -98,4 +111,7 @@ def fondy():
             "amount": amount
         }
         url = checkout.url(data).get('checkout_url')
-        return redirect(url)
+        if url:
+            return redirect(url)
+        abort(404)
+    abort(400)

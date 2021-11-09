@@ -10,7 +10,7 @@
             {% if field.label.text != 'CSRF Token' and field.type != 'SubmitField' and field.type != 'HiddenField' %}
             <div class="form-group">
                 {{ field.label }}
-                {{ field(disabled=True) }}
+                {{ field() }}
             </div>
             {% endif %}
         {% endfor %}
