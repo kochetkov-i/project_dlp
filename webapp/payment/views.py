@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import redirect, Blueprint, request, render_template, url_for, abort
+from flask import redirect, request, render_template, url_for, abort, flash
+from flask import Blueprint
 from flask_login import current_user
 from cloudipsp import Api, Checkout
 import uuid
@@ -91,6 +92,7 @@ def procces_pay():
 
             db.session.add(transaction)
             db.session.commit()
+            flash('Payment success', )
             return redirect(url_for('main.index'))
         abort(400)
     abort(400)
