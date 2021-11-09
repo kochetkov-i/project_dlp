@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  {% for collect in collections %}
+  <div class="card-body">
+    <h5 class="card-title">{{ collect.collection_name }}</h5>
+    <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" class="btn btn-primary">Редактировать</a>
+  </div>
+  {% endfor %}
+{% endblock %}

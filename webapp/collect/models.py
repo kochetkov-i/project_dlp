@@ -20,7 +20,7 @@ class Collections(db.Model):
 
     def __repr__(self):
         return '<Collection Id:{} Name:{} Is_End:{}>'.format(
-            self.id, self.name, self.is_end
+            self.id, self.collection_name, self.is_end
         )
 
 
