@@ -115,9 +115,10 @@ def procces_edit_collect(id):
             db.session.refresh(collection)
 
             attach_files = edit_collect_form.attach.data
-            if len(attach_files):
+            if len(attach_files) > 0 and attach_files[0].content_length > 0:
                 upload_file(attach_files, collection.id)
-
+            else:
+                flash('upload {} files skiped'.format(len(attach_files)))
             return redirect(url_for('main.index'))
 
         abort(404)
@@ -128,7 +129,7 @@ def procces_edit_collect(id):
                 getattr(edit_collect_form, field).label.text,
                 error
             ))
-        return redirect(url_for('collect.edit_collect'))
+        return redirect(url_for('collect.edit_collect', id=id))
 
 
 @blueprint.route('/procces_new_collect', methods=['POST'])
@@ -154,7 +155,8 @@ def procces_new_collect():
         attach_files = edit_collect_form.attach.data
         if len(attach_files) > 0 and attach_files[0].content_length > 0:
             upload_file(attach_files, collection.id)
-
+        else:
+            flash('upload {} files skiped'.format(len(attach_files)))
         return redirect(url_for('main.index'))
 
     for field, errors in edit_collect_form.errors.items():
