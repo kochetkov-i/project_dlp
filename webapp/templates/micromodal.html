@@ -18,9 +18,9 @@
       </main>
       <footer class="modal-footer">
         <div class="btn-group">
-          <a href="{{ url_for('payment.fondy') }}" id='paylinkstatic' amount='50' class="btn btn-primary paylinkstatic">50 RUB</a>
-          <a href="{{ url_for('payment.fondy') }}" id='paylinkstatic' amount='100' class="btn btn-primary paylinkstatic">100 RUB</a>
-          <a href="{{ url_for('payment.fondy') }}" id='paylinkcustom' class="btn btn-primary">Своя сумма</a>
+          <a href="{{ url_for('payment.checkout') }}" id='paylinkstatic' amount='50' class="btn btn-primary paylinkstatic">50 RUB</a>
+          <a href="{{ url_for('payment.checkout') }}" id='paylinkstatic' amount='100' class="btn btn-primary paylinkstatic">100 RUB</a>
+          <a href="{{ url_for('payment.checkout') }}" id='paylinkcustom' class="btn btn-primary">Своя сумма</a>
         </div>
         <button class="btn btn-secondary" data-micromodal-close aria-label="Закрыть диалоговое окно">Отменить</button>
       </footer>

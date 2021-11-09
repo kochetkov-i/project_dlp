@@ -3,6 +3,10 @@ from webapp import db
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    collections_id = db.Column(
+        db.Integer,
+        db.ForeignKey('collections.id'),
+        nullable=False)
     operation_id = db.Column(db.String)
     status = db.Column(db.String)
     datetime = db.Column(db.String)
