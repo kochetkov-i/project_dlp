@@ -131,6 +131,28 @@ def procces_edit_collect(id):
         return redirect(url_for('collect.edit_collect'))
 
 
+def check_collect():
+    today = datetime.now()
+    time_money = Collections.query.order_by(is_end=False)
+    if time_money.amount == time_money.finish_amount:
+        stop_collect = Collections(
+            is_end=True
+        )
+
+        db.session.add(stop_collect)
+        db.session.commit()
+        db.session.refresh(stop_collect)
+
+    if today >= time_money.finish_time:
+        stop_collect = Collections(
+            is_end=True
+        )
+
+        db.session.add(stop_collect)
+        db.session.commit()
+        db.session.refresh(stop_collect)
+
+
 @blueprint.route('/procces_new_collect', methods=['POST'])
 @login_required
 def procces_new_collect():
