@@ -131,6 +131,7 @@ def procces_edit_collect(id):
         return redirect(url_for('collect.edit_collect'))
 
 
+
 @blueprint.route('/procces_new_collect', methods=['POST'])
 @login_required
 def procces_new_collect():
