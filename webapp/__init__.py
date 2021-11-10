@@ -43,6 +43,9 @@ def create_app():
     from webapp.errors.views import blueprint as errors_blueprint
     app.register_blueprint(errors_blueprint)
 
+    from webapp.payment.views import blueprint as payment_blueprint
+    app.register_blueprint(payment_blueprint)
+
     return app
 
 

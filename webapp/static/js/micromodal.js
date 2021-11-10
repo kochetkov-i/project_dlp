@@ -298,8 +298,24 @@
 MicroModal.init();
 
   window.addEventListener('load', () => {
-    var button = document.querySelector('.paymentModal');
-    button.addEventListener("click", () => {
-      MicroModal.show('modal-1');
-    });
+    const buttons = document.querySelectorAll('.paymentModal');
+    buttons.forEach( (button) => {
+        button.addEventListener("click", () => {
+            const collection_id = button.dataset["id"]
+            MicroModal.show('modal-1');
+            document.querySelectorAll('.paylinkstatic').forEach( (link) =>{
+                link.addEventListener("click", () => {
+                    const atr = link.getAttribute("href")
+                    const amount = link.getAttribute("amount")
+                    link.setAttribute("href", atr + '?amount=' + amount + '&id=' + collection_id)
+                });
+            });
+            const customlink = document.getElementById('paylinkcustom')
+            customlink.addEventListener("click", () => {
+                const atr = customlink.getAttribute("href")
+                const amount = document.getElementById('customamountinput').value
+                customlink.setAttribute("href", atr + '?amount=' + amount + '&id=' + collection_id)
+            });
+        });
+    })
   })
