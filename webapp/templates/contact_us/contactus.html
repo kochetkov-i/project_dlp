@@ -8,7 +8,7 @@
             <form action="{{ url_for('contact_us.procces_new_contact') }}" method="POST" enctype='multipart/form-data'>
                 {{ form.hidden_tag() }}
                 {% for fields in form if not fields.hidden %}
-                    {% if fields.label.text!='Отправить' and not loop.last %}
+                {% if field.label.text != 'CSRF Token' and field.type != 'SubmitField' %}
                     <div class="form-group">
                         {{ fields.label }}
                         {{ fields() }}
