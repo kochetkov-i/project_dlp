@@ -115,7 +115,8 @@ def procces_edit_collect(id):
             db.session.refresh(collection)
 
             attach_files = edit_collect_form.attach.data
-            if len(attach_files) > 0 and attach_files[0].content_length > 0:
+            # if len(attach_files) > 0 and attach_files[0].content_length > 0:
+            if len(attach_files) > 0:
                 upload_file(attach_files, collection.id)
             else:
                 flash('upload {} files skiped'.format(len(attach_files)))
@@ -153,7 +154,8 @@ def procces_new_collect():
         db.session.refresh(collection)
 
         attach_files = edit_collect_form.attach.data
-        if len(attach_files) > 0 and attach_files[0].content_length > 0:
+        # if len(attach_files) > 0 and attach_files[0].content_length > 0:
+        if len(attach_files) > 0:
             upload_file(attach_files, collection.id)
         else:
             flash('upload {} files skiped'.format(len(attach_files)))

@@ -27,6 +27,9 @@ class Config:
     FLASK_APP = 'webapp'
     FLASK_ADMIN_SWATCH = 'cerulean'
     REMEMBER_COOKIE_DURATION = timedelta(days=5)
+    UPLOAD_FOLDER = 'images/'
+    ALLOWED_EXTENSIONS = set(['jpg', 'png'])
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
 ```
 - запускаем приложение [ flask run ]
 
