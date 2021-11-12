@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField(
         'Запомнить меня',
         default=True,
-        render_kw={"class": "form-check-input"})
+        render_kw={"class": "form-check-input form-check-label"})
     submit = SubmitField(
         'Войти',
         render_kw={"class": "btn btn-primary"})

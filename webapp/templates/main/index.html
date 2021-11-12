@@ -30,9 +30,8 @@
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
-            <a href="{{ url_for('collect.edit_collect', id=collection.id) }}" class="btn btn-primary">Редактировать</a>
             <a href="{{ url_for('collect.view_collect', id=collection.id) }}" class="btn btn-primary">Открыть</a>
-            <a href="#" class="btn btn-primary paymentModal">Пожертвовать</a>
+            <a href="#" data-id="{{ collection.id }}" class="btn btn-primary paymentModal">Пожертвовать</a>
             </div>
         </div>
     </div>
