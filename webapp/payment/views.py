@@ -92,7 +92,12 @@ def procces_pay():
 
             db.session.add(transaction)
             db.session.commit()
-            flash('Payment success', )
+            flash('Payment success')
+
+            collection.current_amount = collection.current_amount + int(transaction.amount)
+            db.session.add(collection)
+            db.session.commit()
+
             return redirect(url_for('main.index'))
         abort(403)
     abort(400)
