@@ -314,7 +314,7 @@ MicroModal.init();
             customlink.addEventListener("click", () => {
                 const atr = customlink.getAttribute("href")
                 const amount = document.getElementById('customamountinput').value
-                if(isNaN(parseInt(amount)) && parseInt(amount)>0){
+                if(!isNaN(parseInt(amount)) && parseInt(amount) > 0){
                     customlink.setAttribute("href", atr + '?amount=' + amount + '&id=' + collection_id)
                 }
                 else{
