@@ -7,6 +7,8 @@ from webapp.collect.models import Collections, Images
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import os
+import pathlib
+
 
 
 blueprint = Blueprint('collect', __name__, url_prefix='/collect')
@@ -75,11 +77,13 @@ def upload_file(attach_files, collection_id):
                 str(collection_id)
             )
             full_path = os.path.join(folder, filename)
-            link_path = os.path.join(
+            path = os.path.join(
                 Config.UPLOAD_FOLDER,
                 str(collection_id),
                 filename
             )
+            link_path = pathlib.PureWindowsPath(path).as_posix()
+            print(link_path)
             if not os.path.exists(folder):
                 os.makedirs(folder, exist_ok=True)
 
@@ -154,7 +158,6 @@ def procces_new_collect():
         db.session.refresh(collection)
 
         attach_files = edit_collect_form.attach.data
-        # if len(attach_files) > 0 and attach_files[0].content_length > 0:
         if len(attach_files) > 0:
             upload_file(attach_files, collection.id)
         else:
