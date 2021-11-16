@@ -30,6 +30,11 @@
             <div class="card-body">
             <h5 class="card-title">{{ collection.collection_name }}</h5>
             <p class="card-text">{{ collection.description }}</p>
+            <br>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: auto;" aria-valuenow="{{ collection.current_amount }}" aria-valuemin="0" aria-valuemax="{{ collection.finish_count }}">{{ collection.current_amount }}</div>
+            </div>
+            <br>
             <a href="{{ url_for('collect.view_collect', id=collection.id) }}" class="btn btn-primary">Открыть</a>
             <a href="#" data-id="{{ collection.id }}" class="btn btn-primary paymentModal">Пожертвовать</a>
             </div>
