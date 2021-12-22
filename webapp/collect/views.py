@@ -70,12 +70,14 @@ def upload_file(attach_files, collection_id):
         if file.filename and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             folder = os.path.join(
+                os.sep,
                 basedir,
                 Config.UPLOAD_FOLDER,
                 str(collection_id)
             )
-            full_path = os.path.join(folder, filename)
+            full_path = os.path.join(os.sep, folder, filename)
             link_path = os.path.join(
+                os.sep,
                 Config.UPLOAD_FOLDER,
                 str(collection_id),
                 filename
