@@ -9,10 +9,7 @@ import os
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
-basedir = os.path.join(
-    os.path.abspath(os.path.dirname(__file__)),
-    "static"
-)
+basedir = os.path.abspath(os.path.join(os.sep, os.path.dirname(__file__), 'static'))
 
 
 def create_app():
