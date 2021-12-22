@@ -1,7 +1,7 @@
 instance/
 .vscode/
 config.py
-static/images/
+webapp/static/images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
