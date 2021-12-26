@@ -2,9 +2,24 @@
 
 {% block body %}
   {% for collect in collections %}
-  <div class="card-body">
-    <h5 class="card-title">{{ collect.collection_name }}</h5>
-    <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" class="btn btn-primary">Редактировать</a>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ collect.collection_name }}</h5>
+      <p class="card-text">{{ collect.description }}</p>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: auto;" aria-valuenow="{{ collect.current_amount }}" aria-valuemin="0" aria-valuemax="{{ collect.finish_count }}">{{ collect.current_amount }}</div>
+      </div>
+      <br>
+      {% if collect.is_end is sameas false %}
+      <footer class="blockquote-footer">Сбор средств идет до: {{ collect.finish_time }}</footer>
+      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <a href="{{ url_for('collect.edit_collect', id=collect.id) }}" class="btn btn-primary">Редактировать</a>
+        <a href="#" class="btn btn-danger">Завершить сбор</a>
+      </div>
+      {% else %}
+      <footer class="blockquote-footer">Сбор средств завершен, собрано: {{ collect.current_amount }}</footer>
+      {% endif %}
+    </div>
   </div>
   {% endfor %}
 {% endblock %}
